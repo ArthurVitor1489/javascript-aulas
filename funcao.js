@@ -65,7 +65,3 @@ function primeiraEmMaiuscula (elemento){
     return elemento.charAt(0).toUpperCase () + elemento.slice(1)
 };
 
-
-funciton compare 
-
-
