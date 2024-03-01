@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo dom 5</title>
+</head>
+<body>
+    <div>
+
+        <ul id="lista">
+            <li>Produtos</li>
+        </ul>
+
+        <ul class="listatime">
+
+        </ul>
+
+    </div>
+</body>
+<Script>
+
+    var elemento = document.createElement("div");
+    elemento.innerText = "Incluíndo texto na div";
+    elemento.style.backgroundColor = "green"
+    document.body.append(elemento);
+
+    var lista = document.getElementById("lista");
+    var li = document.createElement("li");
+    li.textContent = "Quem somos";
+    lista.appendChild(li);
+
+
+    times = [ "Real Madri", "Barcelona","Atletico","Juventus"]
+
+    var listadetimes = document.querySelector('ul.listatime')
+
+    for(var i = 0; i < times.length; i++){
+        var time = times[i];
+        var listaItem = document.createElement('li');
+        listaItem.innerText = time;
+        listaItem.style.border = '1px solid blue'
+        listadetimes.appendChild(listaItem);
+    
+    }
+
+</Script>
+</html>
