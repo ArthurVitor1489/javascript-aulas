@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Funcionário</title>
+</head>
+<body>
+    <h1>Cadastro de Funcionário</h1>
+
+    <form id="formulario">
+        <label for="nome">Nome:</label><br>
+        <input type="text" id="nome" name="nome"><br>
+        <label for="idade">Idade:</label><br>
+        <input type="number" id="idade" name="idade"><br>
+        <label for="cargo">Cargo:</label><br>
+        <select id="cargo" name="cargo">
+            <option value="gerente">Gerente</option>
+            <option value="desenvolvedor">Desenvolvedor</option>
+        </select><br>
+        <div id="departamentoField" style="display: none;">
+            <label for="departamento">Departamento:</label><br>
+            <input type="text" id="departamento" name="departamento"><br>
+        </div>
+        <div id="linguagemField" style="display: none;">
+            <label for="linguagem">Linguagem de Programação:</label><br>
+            <input type="text" id="linguagem" name="linguagem"><br>
+        </div>
+        <br>
+        <button type="button" onclick="criarFuncionario()">Cadastrar Funcionário</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        function criarFuncionario() {
+            try {
+                const nome = document.getElementById("nome").value;
+                const idade = parseInt(document.getElementById("idade").value);
+                const cargo = document.getElementById("cargo").value;
+
+                if (!nome || !idade || !cargo) {
+                    throw new Error("Por favor, preencha todos os campos.");
+                }
+
+                let funcionario;
+
+                if (cargo === "gerente") {
+                    const departamento = document.getElementById("departamento").value;
+                    if (!departamento) {
+                        throw new Error("Por favor, informe o departamento para o gerente.");
+                    }
+                    funcionario = new Gerente(nome, idade, departamento);
+                } else if (cargo === "desenvolvedor") {
+                    const linguagem = document.getElementById("linguagem").value;
+                    if (!linguagem) {
+                        throw new Error("Por favor, informe a linguagem de programação para o desenvolvedor.");
+                    }
+                    funcionario = new Desenvolvedor(nome, idade, linguagem);
+                } else {
+                    throw new Error("Cargo inválido. Por favor, selecione 'Gerente' ou 'Desenvolvedor'.");
+                }
+
+                exibirInformacoes(funcionario);
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function exibirInformacoes(funcionario) {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `<h2>Informações do Funcionário</h2>`;
+            resultadoDiv.innerHTML += `<p>${funcionario.seApresentar()}</p>`;
+            resultadoDiv.innerHTML += `<p>${funcionario.trabalhar()}</p>`;
+
+            if (funcionario instanceof Gerente) {
+                resultadoDiv.innerHTML += `<p>${funcionario.gerenciar()}</p>`;
+            } else if (funcionario instanceof Desenvolvedor) {
+                resultadoDiv.innerHTML += `<p>${funcionario.programar()}</p>`;
+            }
+        }
+
+        class Funcionario {
+            constructor(nome, idade, cargo) {
+                this.nome = nome;
+                this.idade = idade;
+                this.cargo = cargo;
+            }
+
+            seApresentar() {
+                return `Olá, meu nome é ${this.nome}, tenho ${this.idade} anos e sou ${this.cargo}.`;
+            }
+
+            trabalhar() {
+                return `${this.nome} está trabalhando.`;
+            }
+        }
+
+        class Gerente extends Funcionario {
+            constructor(nome, idade, departamento) {
+                super(nome, idade, 'Gerente');
+                this.departamento = departamento;
+            }
+
+            gerenciar() {
+                return `${this.nome} está gerenciando o departamento ${this.departamento}.`;
+            }
+        }
+
+        class Desenvolvedor extends Funcionario {
+            constructor(nome, idade, linguagem) {
+                super(nome, idade, 'Desenvolvedor');
+                this.linguagem = linguagem;
+            }
+
+            programar() {
+                return `${this.nome} está programando em ${this.linguagem}.`;
+            }
+        }
+
+        document.getElementById("cargo").addEventListener("change", function() {
+            const departamentoField = document.getElementById("departamentoField");
+            const linguagemField = document.getElementById("linguagemField");
+
+            if (this.value === "gerente") {
+                departamentoField.style.display = "block";
+                linguagemField.style.display = "none";
+            } else if (this.value === "desenvolvedor") {
+                departamentoField.style.display = "none";
+                linguagemField.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
