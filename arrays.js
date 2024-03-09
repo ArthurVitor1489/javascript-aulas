@@ -106,4 +106,3 @@ const mesesDoAno = [
   console.log('Trimestre 4:', mesesDoAno[3]);
 
 
-  var

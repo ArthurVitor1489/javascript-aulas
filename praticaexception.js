@@ -7,6 +7,8 @@ function divisão(a,b){
 
 try{
 
-const resultado = divisão (10,0);\
+const resultado = divisão (10,0);
 console.log("resultado: =")
-}catch(erro)
+}catch(erro){
+
+}
